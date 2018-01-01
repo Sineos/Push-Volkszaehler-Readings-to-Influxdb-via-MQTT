@@ -121,6 +121,7 @@ Within uuidMap you can specify all channels from volkszaehler. It is important t
 
 #### Configure MQTT output
 ![enter image description here](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/src_readme/edit_mqtt.jpg)
+
 Edit the `Server` to match the IP and port of the MQTT message broker (e.g. Mosquitto).
 
 ### Telegraf
