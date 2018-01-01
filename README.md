@@ -2,8 +2,9 @@
 This flow connects to the Volkszaehler push-server via a websocket-node and receives json formatted measurements.
 These measurements are then transformed in a function-node to be send to influxdb's telegraf via the mqtt protocol.
 
-#How To
-##Prerequisites
+# How To
+
+## Prerequisites
 
  - [NodeRed](http://nodered.org/)
  - [Vzlogger](https://github.com/volkszaehler/vzlogger)
@@ -15,9 +16,10 @@ These measurements are then transformed in a function-node to be send to influxd
 
 Setup instructions are widely available in the WWW for these products and may vary according to the hardware (Raspberry PI, i386 etc) and linux distribution.
 
-##Configuration
+## Configuration
 
-###Vzlogger
+### Vzlogger
+
 Make sure you Vzlogger installation past the 28 Jun 2015 to support the push settings.
 
 *vzlogger.conf*
@@ -31,7 +33,8 @@ Make sure you Vzlogger installation past the 28 Jun 2015 to support the push set
 
 If your volkszaehler.org instance is running on the same machine as vzlogger you can leave the `url` setting, otherwise replace it with the IP of your volkszaehler.org instance.
 
-###volkszaehler.org
+### volkszaehler.org
+
 To use the volkszaehler push feature you will need a volkszaehler version after this [commit](https://github.com/volkszaehler/volkszaehler.org/commit/b415699b5ec281526791ad80dec9b7abf64faee8). I recommend the manual installation of volkszaehler, described [here](http://wiki.volkszaehler.org/software/middleware/installation) in the chapter "Manuelle Installation". This makes updating the installation a lot easier later.
 
 volkszaehler.conf.php
@@ -80,19 +83,22 @@ To enable the push-server at boot:
 
     sudo systemctl enable push-server
 
-###NodeRed
-####Import Flow
+### NodeRed
+
+#### Import Flow
+
 Copy the flow.json in [raw format](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/flow.json) to your clipboard.
 In NodeRed import the copied flow:
 ![import_flow](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/src_readme/import_nodered.jpg)
 
-####Configure push-server input
+#### Configure push-server input
 ![enter image description here](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/src_readme/edit_websocket.jpg)
+
 Add / modify the URL to point to your push-server IP. If NodeRed and the volkszaehler / push-server is running on the same machine use:
 
     ws://127.0.0.1:8082/socket
 
-####Configure function node
+#### Configure function node
 Double-click the function node `Format payload for influxdb`
 ![enter image description here](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/src_readme/edit_function.jpg)
 
@@ -113,11 +119,11 @@ Within uuidMap you can specify all channels from volkszaehler. It is important t
     	}
     }, 
 
-####Configure MQTT output
+#### Configure MQTT output
 ![enter image description here](https://raw.githubusercontent.com/Sineos/Push-Volkszaehler-Readings-to-Influxdb-via-MQTT/master/src_readme/edit_mqtt.jpg)
 Edit the `Server` to match the IP and port of the MQTT message broker (e.g. Mosquitto).
 
-###Telegraf
+### Telegraf
 In the telegraf.conf file you have to specify an Input-Plugin for the MQTT protocol:
 
     # Read metrics from MQTT topic(s)
